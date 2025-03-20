@@ -14,6 +14,8 @@ The project explores two main approaches:
 
 2.  **Generalized Policy Iteration (GPI):**  A dynamic programming approach that finds an optimal policy by iteratively evaluating and improving a value function.  The state and control spaces are discretized, and transition probabilities and stage costs are precomputed.  Parallel computing (using Ray) is employed to manage the computational complexity.  *Note: The provided GPI implementation is incomplete and serves as a starting point, not a fully working solution.*
 
+[![Simulation Preview](animation.gif)]
+
 ## Files Included
 
 *   **`main.py`:**  The main script that runs the simulation.  It initializes the robot, sets up the control loop, and calls the CEC controller (or, potentially, a GPI controller). Includes visualization setup.
