@@ -54,6 +54,8 @@ def main():
     # gpi_controller = GPI(config)
     # gpi_controller.compute_policy(10)
 
+    control_cec = cec.CEC(obstacles=obstacles)
+
     # Main loop
     while cur_iter * utils.time_step < utils.sim_time:
         t1 = time()
@@ -69,8 +71,7 @@ def main():
         # TODO: Replace this simple controller with your own controller
         # control = utils.simple_controller(cur_state, cur_ref)
 
-        control_cec = cec.CEC()
-        control = control_cec(cur_time,cur_state,cur_ref)
+        control = control_cec(cur_iter,cur_state,cur_ref)
 
         # control = gpi_controller(cur_iter, cur_state, cur_ref)
 

@@ -35,6 +35,21 @@ The project explores two main approaches:
 * **`stage_cost_f16.npy`**: Precomputed stage costs.
 * **`ECE 276B_PR3_Report.pdf`**: Project Report
 
+## Results
+
+`code/evaluate.py` runs both controllers through `main.py`'s loop (120 s, motion noise σ = 0.04 m / 0.004 rad per step) for 20 seeds:
+
+| | P controller (`utils.simple_controller`) | Receding-horizon CEC (`cec.py`) |
+|---|---:|---:|
+| Mean position error | 0.914 m | **0.209 m** |
+| Worst position error | 5.812 m | **0.688 m** |
+| Steps inside an obstacle (of 4,800) | 184, in 19 of 20 runs | **1** (5 mm, in 1 run) |
+| Median time per control step | <0.1 ms | 5.1 ms |
+
+The reference itself passes 0.3 m inside an obstacle, so tracking it exactly would collide. The CEC keeps its predicted states 0.15 m (≈3.75σ) outside each obstacle; with unbounded Gaussian noise a fixed margin cannot rule out every contact, which is the one 5 mm graze above.
+
+The CEC is a CasADi NLP built once, with the current state and the 15-step reference as parameters, solved by IPOPT and warm-started from the previous plan. Obstacle avoidance is a smooth constraint on each predicted state, (x − x_o)² + (y − y_o)² ≥ (r + 0.15)².
+
 ## Dependencies
 
 *   **Python 3.x**
